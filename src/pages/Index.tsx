@@ -11,6 +11,7 @@ const Index = () => {
   const [alicePosition, setAlicePosition] = useState(0);
   const [health, setHealth] = useState(100);
   const [distance, setDistance] = useState(0);
+  const [showInfo, setShowInfo] = useState(false);
 
   const startGame = () => {
     setGameState('playing');
@@ -191,72 +192,84 @@ const Index = () => {
         </div>
       )}
 
-      <div className="fixed bottom-4 right-4">
-        <Tabs defaultValue="characters" className="w-full max-w-md">
-          <TabsList className="grid w-full grid-cols-2 bg-black/80 border border-red-900">
-            <TabsTrigger value="characters" className="text-white data-[state=active]:bg-red-900">
-              Персонажи
-            </TabsTrigger>
-            <TabsTrigger value="rules" className="text-white data-[state=active]:bg-red-900">
-              Правила
-            </TabsTrigger>
-          </TabsList>
-          
-          <TabsContent value="characters" className="bg-black/90 p-4 border border-red-900 rounded">
-            <div className="space-y-4">
-              <Card className="bg-red-950/50 border-red-800">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-white text-lg flex items-center gap-2">
-                    <img src="https://v3b.fal.media/files/b/koala/mYlK3pRLplDCitn2WH0GT_output.png" 
-                         alt="Alice" 
-                         className="w-12 h-12 rounded-full object-cover border-2 border-red-600" />
-                    Алиса
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-300 text-sm">
-                    Опасный преследователь. Движется быстро и непредсказуемо.
-                  </p>
-                </CardContent>
-              </Card>
+      <div className="fixed bottom-4 right-4 z-50">
+        <Button 
+          onClick={() => setShowInfo(!showInfo)}
+          className="mb-2 bg-red-900 hover:bg-red-800 text-white border-2 border-red-700"
+        >
+          <Icon name={showInfo ? "X" : "Info"} size={20} className="mr-2" />
+          {showInfo ? 'Закрыть' : 'Инфо'}
+        </Button>
 
-              <Card className="bg-gray-900/50 border-gray-700">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-white text-lg flex items-center gap-2">
-                    <Icon name="User" className="text-blue-400" />
-                    Игрок
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-300 text-sm">
-                    Вы - ученик, пытающийся выбраться из школы живым.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
+        {showInfo && (
+          <div className="animate-scale-in">
+            <Tabs defaultValue="characters" className="w-full max-w-md">
+              <TabsList className="grid w-full grid-cols-2 bg-black/80 border border-red-900">
+                <TabsTrigger value="characters" className="text-white data-[state=active]:bg-red-900">
+                  Персонажи
+                </TabsTrigger>
+                <TabsTrigger value="rules" className="text-white data-[state=active]:bg-red-900">
+                  Правила
+                </TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="characters" className="bg-black/90 p-4 border border-red-900 rounded">
+                <div className="space-y-4">
+                  <Card className="bg-red-950/50 border-red-800">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-white text-lg flex items-center gap-2">
+                        <img src="https://v3b.fal.media/files/b/koala/mYlK3pRLplDCitn2WH0GT_output.png" 
+                             alt="Alice" 
+                             className="w-12 h-12 rounded-full object-cover border-2 border-red-600" />
+                        Алиса
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-gray-300 text-sm">
+                        Опасный преследователь. Движется быстро и непредсказуемо.
+                      </p>
+                    </CardContent>
+                  </Card>
 
-          <TabsContent value="rules" className="bg-black/90 p-4 border border-red-900 rounded">
-            <div className="space-y-3 text-white text-sm">
-              <div>
-                <h3 className="font-bold text-red-400 mb-1">🎯 Цель:</h3>
-                <p className="text-gray-300">Достичь 100% прогресса до выхода</p>
-              </div>
-              <div>
-                <h3 className="font-bold text-red-400 mb-1">🏃 Бег:</h3>
-                <p className="text-gray-300">Продвигает вперёд, но Алиса тоже движется</p>
-              </div>
-              <div>
-                <h3 className="font-bold text-red-400 mb-1">🚪 Укрытие:</h3>
-                <p className="text-gray-300">Шанс замедлить Алису или потерять здоровье</p>
-              </div>
-              <div>
-                <h3 className="font-bold text-red-400 mb-1">❤️ Здоровье:</h3>
-                <p className="text-gray-300">При 0% - проигрыш</p>
-              </div>
-            </div>
-          </TabsContent>
-        </Tabs>
+                  <Card className="bg-gray-900/50 border-gray-700">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-white text-lg flex items-center gap-2">
+                        <Icon name="User" className="text-blue-400" />
+                        Игрок
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-gray-300 text-sm">
+                        Вы - ученик, пытающийся выбраться из школы живым.
+                      </p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="rules" className="bg-black/90 p-4 border border-red-900 rounded">
+                <div className="space-y-3 text-white text-sm">
+                  <div>
+                    <h3 className="font-bold text-red-400 mb-1">🎯 Цель:</h3>
+                    <p className="text-gray-300">Достичь 100% прогресса до выхода</p>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-red-400 mb-1">🏃 Бег:</h3>
+                    <p className="text-gray-300">Продвигает вперёд, но Алиса тоже движется</p>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-red-400 mb-1">🚪 Укрытие:</h3>
+                    <p className="text-gray-300">Шанс замедлить Алису или потерять здоровье</p>
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-red-400 mb-1">❤️ Здоровье:</h3>
+                    <p className="text-gray-300">При 0% - проигрыш</p>
+                  </div>
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
+        )}
       </div>
     </div>
   );
